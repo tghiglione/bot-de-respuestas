@@ -8,5 +8,4 @@ if ! cmake --build .; then
   exit 1
 else
   echo "El proyecto compiló correctamente."
-  exit 0
 fi

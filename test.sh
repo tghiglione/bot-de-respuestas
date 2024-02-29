@@ -7,5 +7,4 @@ elif [ ! -f "build/HertaTest" ]; then
   exit 1
 else
   ./build/HertaTest
-  exit 0
 fi

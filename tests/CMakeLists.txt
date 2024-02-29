@@ -3,7 +3,8 @@ project(HertaTest)
 include(FetchContent)
 FetchContent_Declare(
         googletest
-        URL https://github.com/google/googletest/archive/9d43b27f7a873596496a2ea70721b3f9eb82df01.zip
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG e4fdb87e76b9fc4b01c54ad81aea19d6e994b994
 )
 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
