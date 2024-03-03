@@ -4,8 +4,8 @@
 
 class HertaTest : public ::testing::Test {
 protected:
-    const std::string RESPUESTA_AUTOMATICA = "Hola. En este momento no estoy disponible, y no me pondre en contacto "
-                                             "contigo mas tarde.\n";
+    const std::string RESPUESTA_AUTOMATICA = "[Respuesta automatica] Hola. En este momento no estoy disponible, "
+                                             "y no me pondre en contacto contigo mas tarde.\n";
     const std::string RESPUESTAS_KURU[3] = {"KURU\n", "KURURIN\n", "KURU KURU\n"};
     const std::string RESPUESTA_HOLA = "Hola.\n";
     const std::string RESPUESTA_PROBLEMA = "No te preocupes. Ya esta solucionado.\n";
