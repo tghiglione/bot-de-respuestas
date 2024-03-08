@@ -21,4 +21,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "main")
 
 add_subdirectory(tests)
 
-target_sources(HertaTest PRIVATE ${ARCHIVOS_FUENTE})
+target_sources(TPTests PRIVATE ${ARCHIVOS_FUENTE})

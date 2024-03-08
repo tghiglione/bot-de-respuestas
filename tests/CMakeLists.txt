@@ -1,4 +1,4 @@
-project(HertaTest)
+project(TPTests)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -12,14 +12,14 @@ FetchContent_MakeAvailable(googletest)
 
 include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 
-add_executable(HertaTest
+add_executable(TPTests
         HertaTest.cpp
 )
 
 target_link_libraries(
-        HertaTest
+        TPTests
         GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(HertaTest)
+gtest_discover_tests(TPTests)
