@@ -18,38 +18,43 @@ protected:
     Herta herta{};
     std::string respuesta{};
 
-    static std::string capturar_respuesta(Herta& herta1, std::string mensaje);
+    static std::string capturar_respuesta(Herta& herta, std::string mensaje);
+
+    void SetUp() override;
 };
 
-std::string HertaTest::capturar_respuesta(Herta& herta1, std::string mensaje) {
+std::string HertaTest::capturar_respuesta(Herta& herta, std::string mensaje) {
     testing::internal::CaptureStdout();
-    herta1.responder(mensaje);
+    herta.responder(mensaje);
     return testing::internal::GetCapturedStdout();
 }
 
-TEST_F(HertaTest, LaPrimeraRespuestaSiempreEsAutomatica) {
-    respuesta = capturar_respuesta(herta, "hola");
+void HertaTest::SetUp() {
+    capturar_respuesta(herta, "");
+}
+
+TEST_F(HertaTest, LaPrimeraRespuestaEsAutomatica) {
+    Herta herta1;
+    respuesta = capturar_respuesta(herta1, "hola");
     ASSERT_EQ(respuesta, RESPUESTA_AUTOMATICA);
 }
 
-TEST_F(HertaTest, LaQuintaRespuestaEsManual) {
+TEST_F(HertaTest, HertaRespondeCincoMensajesDeFormaManual) {
     for (int _ = 1; _ <= 5; _++) {
-        capturar_respuesta(herta, "...");
+        respuesta = capturar_respuesta(herta, "hola");
+        ASSERT_EQ(respuesta, RESPUESTA_HOLA);
     }
-    respuesta = capturar_respuesta(herta, "hola");
-    ASSERT_EQ(respuesta, RESPUESTA_HOLA);
 }
 
-TEST_F(HertaTest, DespuesDeCincoRespuestasManualesLaRespuestaSiempreEsAutomatica) {
-    for (int _ = 1; _ <= 6; _++) {
-        capturar_respuesta(herta, "...");
+TEST_F(HertaTest, DespuesDeCincoRespuestasManualesLaRespuestaEsAutomatica) {
+    for (int _ = 1; _ <= 5; _++) {
+        capturar_respuesta(herta, "");
     }
     respuesta = capturar_respuesta(herta, "hola");
     ASSERT_EQ(respuesta, RESPUESTA_AUTOMATICA);
 }
 
 TEST_F(HertaTest, RespuestaManualKuruKururin) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "kuru");
     ASSERT_THAT(RESPUESTAS_KURU, testing::Contains(respuesta));
 
@@ -58,7 +63,6 @@ TEST_F(HertaTest, RespuestaManualKuruKururin) {
 }
 
 TEST_F(HertaTest, RespuestaManualKuruKururinNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "KURU");
     ASSERT_THAT(RESPUESTAS_KURU, testing::Contains(respuesta));
 
@@ -67,31 +71,26 @@ TEST_F(HertaTest, RespuestaManualKuruKururinNoEsCaseSensitive) {
 }
 
 TEST_F(HertaTest, RespuestaManualHola) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "hola");
     ASSERT_EQ(respuesta, RESPUESTA_HOLA);
 }
 
 TEST_F(HertaTest, RespuestaManualHolaNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "HoLa");
     ASSERT_EQ(respuesta, RESPUESTA_HOLA);
 }
 
 TEST_F(HertaTest, RespuestaManualProblema) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "problema");
     ASSERT_EQ(respuesta, RESPUESTA_PROBLEMA);
 }
 
 TEST_F(HertaTest, RespuestaManualProblemaNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "ProBleMa");
     ASSERT_EQ(respuesta, RESPUESTA_PROBLEMA);
 }
 
 TEST_F(HertaTest, RespuestaManualPreocupado) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "preocupado");
     ASSERT_EQ(respuesta, RESPUESTA_PREOCUPADO);
 
@@ -100,7 +99,6 @@ TEST_F(HertaTest, RespuestaManualPreocupado) {
 }
 
 TEST_F(HertaTest, RespuestaManualPreocupadoNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "PreOcuPaDo");
     ASSERT_EQ(respuesta, RESPUESTA_PREOCUPADO);
 
@@ -109,85 +107,66 @@ TEST_F(HertaTest, RespuestaManualPreocupadoNoEsCaseSensitive) {
 }
 
 TEST_F(HertaTest, RespuestaManualSimulado) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "simulado");
     ASSERT_EQ(respuesta, RESPUESTA_SIMULADO);
 }
 
 TEST_F(HertaTest, RespuestaManualSimuladoNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "SimuLaDo");
     ASSERT_EQ(respuesta, RESPUESTA_SIMULADO);
 }
 
 TEST_F(HertaTest, RespuestaManualEresHerta) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "Eres Herta?");
     ASSERT_EQ(respuesta, RESPUESTA_ERES_HERTA);
 }
 
 TEST_F(HertaTest, RespuestaManualEresHertaNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "ERES HERTA?");
     ASSERT_EQ(respuesta, RESPUESTA_ERES_HERTA);
 }
 
 TEST_F(HertaTest, RespuestaManualEresHertaElMensajeDebeSerExacto) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "Eres Herta??");
     ASSERT_THAT(RESPUESTAS_INDETERMINADO, testing::Contains(respuesta));
 }
 
 TEST_F(HertaTest, RespuestaManualMarioneta) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "Y tu marioneta?");
     ASSERT_EQ(respuesta, RESPUESTA_MARIONETA);
 }
 
 TEST_F(HertaTest, RespuestaManualMarionetaNoEsCaseSensitive) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "Y TU MARIONETA?");
     ASSERT_EQ(respuesta, RESPUESTA_MARIONETA);
 }
 
 TEST_F(HertaTest, RespuestaManualMarionetaElMensajeDebeSerExacto) {
-    capturar_respuesta(herta, "...");
     respuesta = capturar_respuesta(herta, "Y tu marioneta??");
     ASSERT_THAT(RESPUESTAS_INDETERMINADO, testing::Contains(respuesta));
 }
 
-TEST_F(HertaTest, RespuestaManualIndeterminada) {
-    capturar_respuesta(herta, "...");
+TEST_F(HertaTest, RespuestaManualIndeterminado) {
     respuesta = capturar_respuesta(herta, "...");
     ASSERT_THAT(RESPUESTAS_INDETERMINADO, testing::Contains(respuesta));
 }
 
-TEST_F(HertaTest, RespuestaManual1SePriorizaSobre2) {
-    capturar_respuesta(herta, "...");
-    respuesta = capturar_respuesta(herta, "kuru hola");
+TEST_F(HertaTest, PrioridadRespuestaManualKuru) {
+    respuesta = capturar_respuesta(herta, "kuru hola problema preocupado simulado");
     ASSERT_THAT(RESPUESTAS_KURU, testing::Contains(respuesta));
 }
 
-TEST_F(HertaTest, RespuestaManual2SePriorizaSobre3) {
-    capturar_respuesta(herta, "...");
-    respuesta = capturar_respuesta(herta, "hola problema");
+TEST_F(HertaTest, PrioridadRespuestaManualHola) {
+    respuesta = capturar_respuesta(herta, "hola problema preocupado simulado");
     ASSERT_EQ(respuesta, RESPUESTA_HOLA);
 }
 
-TEST_F(HertaTest, RespuestaManual3SePriorizaSobre4) {
-    capturar_respuesta(herta, "...");
-    respuesta = capturar_respuesta(herta, "problema preocupado");
+TEST_F(HertaTest, PrioridadRespuestaManualProblema) {
+    respuesta = capturar_respuesta(herta, "problema preocupado simulado");
     ASSERT_EQ(respuesta, RESPUESTA_PROBLEMA);
 }
 
-TEST_F(HertaTest, RespuestaManual4SePriorizaSobre5) {
-    capturar_respuesta(herta, "...");
+TEST_F(HertaTest, PrioridadRespuestaManualPreocupado) {
     respuesta = capturar_respuesta(herta, "preocupado simulado");
     ASSERT_EQ(respuesta, RESPUESTA_PREOCUPADO);
-}
-
-TEST_F(HertaTest, RespuestaManual1SePriorizaSobre5) {
-    capturar_respuesta(herta, "...");
-    respuesta = capturar_respuesta(herta, "kuru simulado");
-    ASSERT_THAT(RESPUESTAS_KURU, testing::Contains(respuesta));
 }
