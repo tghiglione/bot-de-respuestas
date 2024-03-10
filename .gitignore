@@ -36,3 +36,7 @@ main
 .idea/
 build/
 cmake-build-debug/
+.vscode/
+
+# Mac
+__MACOSX/
