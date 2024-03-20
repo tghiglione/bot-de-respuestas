@@ -8,7 +8,7 @@
       "output": null,
       "comparison": "exact",
       "timeout": 5,
-      "points": 1
+      "points": 8
     },
     {
       "name": "Chequeo de Memoria",
@@ -18,7 +18,7 @@
       "output": null,
       "comparison": "exact",
       "timeout": 5,
-      "points": 1
+      "points": 2
     }
   ]
 }
