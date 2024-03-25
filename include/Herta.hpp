@@ -25,6 +25,8 @@ private:
 
     string respuesta_mensaje_ninguna_opcion(int numero_random);
 
+    string gestor_de_mensajes_manuales(string mensaje);
+
 public:
     Herta();
 
