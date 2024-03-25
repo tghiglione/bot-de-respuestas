@@ -34,7 +34,7 @@ void imprimir_mensaje(string mensaje_para_imprimir){
 };
 
 Herta::Herta(){
-    this->respuesta_automatica = "[Respuesta automática] Hola. En este momento no estoy disponible, y no me pondré en contacto contigo más tarde.";
+    this->respuesta_automatica = "[Respuesta automatica] Hola. En este momento no estoy disponible, y no me pondre en contacto contigo mas tarde.";
     this->respuesta_hola = "Hola.";
     this->respuesta_problema = "No te preocupes. Ya esta solucionado.";
     this->respuesta_preocupado = "De que te preocupas si yo estoy aqui?";
